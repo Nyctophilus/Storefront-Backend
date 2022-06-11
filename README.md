@@ -28,6 +28,8 @@ Storefront Backend Project
 - create database for dev env
   `CREATE DATABASE storefront`
 
+- Database port is `5432`
+
 - connect to database
   `\c storefront`
 
