@@ -5,13 +5,21 @@ import verifyAuthToken from "../middleware/verifyAuthToken";
 const store = new ProductStore();
 
 const index = async (_req: Request, res: Response) => {
-  const products = await store.index();
-  res.json(products);
+  try {
+    const products = await store.index();
+    res.json(products);
+  } catch (error) {
+    console.log(error);
+  }
 };
 
 const show = async (req: Request, res: Response) => {
-  const product = await store.show(req.params.productName);
-  res.json(product);
+  try {
+    const product = await store.show(req.params.id);
+    res.json(product);
+  } catch (error) {
+    console.log(error);
+  }
 };
 
 const create = async (req: Request, res: Response) => {
@@ -31,7 +39,7 @@ const create = async (req: Request, res: Response) => {
 
 const destroy = async (req: Request, res: Response) => {
   try {
-    await store.delete(req.body.productName as string);
+    await store.delete(req.body.id as string);
     res.json({ status: "success" });
   } catch (error) {
     res.status(400);

@@ -9,13 +9,21 @@ import verifyAuthToken from "../middleware/verifyAuthToken";
 const store = new OrderStore();
 
 const index = async (_req: Request, res: Response) => {
-  const orders = await store.index();
-  res.json(orders);
+  try {
+    const orders = await store.index();
+    res.json(orders);
+  } catch (error) {
+    console.log(error);
+  }
 };
 
 const show = async (req: Request, res: Response) => {
-  const order = await store.show(req.body.userId);
-  res.json(order);
+  try {
+    const order = await store.show(req.body.userId);
+    res.json(order);
+  } catch (error) {
+    console.log(error);
+  }
 };
 
 const createOrder = async (req: Request, res: Response) => {
@@ -80,8 +88,8 @@ const deleteOrderProduct = async (
 };
 
 const orderRoutes = (app: express.Application) => {
-  app.get("/orders", index);
-  app.get("/orders/:userId", show);
+  app.get("/orders", verifyAuthToken, index);
+  app.get("/orders/:userId", verifyAuthToken, show);
   app.post("/orders", verifyAuthToken, createOrder);
   app.delete("/orders", verifyAuthToken, deleteOrder);
   app.post(

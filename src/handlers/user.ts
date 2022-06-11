@@ -15,13 +15,21 @@ const {
 const store = new UserStore();
 
 const index = async (_req: Request, res: Response) => {
-  const users = await store.index();
-  res.json(users);
+  try {
+    const users = await store.index();
+    res.json(users);
+  } catch (error) {
+    console.log(error);
+  }
 };
 
 const show = async (req: Request, res: Response) => {
-  const user = await store.show(req.params.username);
-  res.json(user);
+  try {
+    const user = await store.show(req.params.username);
+    res.json(user);
+  } catch (error) {
+    console.log(error);
+  }
 };
 
 const register = async (req: Request, res: Response) => {
