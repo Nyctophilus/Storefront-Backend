@@ -62,48 +62,48 @@ describe("Order Model", () => {
   });
 
   it("CREATE method should add an order", async () => {
-    const { status, user_id } = await store.createOrder({
+    const { status, userId } = await store.createOrder({
       status: "shipped", // ordered - shipped - delivered
       userId: 3,
     });
 
-    expect({ status, user_id }).toEqual({
+    expect({ status, userId }).toEqual({
       status: "shipped",
-      user_id: "3",
+      userId: "3",
     });
   });
 
   it("INDEX method return orders list", async () => {
-    const [{ status, user_id }] = await store.index();
+    const [{ status, userId }] = await store.index();
 
-    expect({ status, user_id }).toEqual({
+    expect({ status, userId }).toEqual({
       status: "shipped",
-      user_id: "3",
+      userId: "3",
     });
   });
 
   it("SHOW method should return user orders", async () => {
-    const { status, user_id } = await store.show("3");
+    const { status, userId } = await store.show("3");
 
-    expect({ status, user_id }).toEqual({
+    expect({ status, userId }).toEqual({
       status: "shipped",
-      user_id: "3",
+      userId: "3",
     });
   });
 
   it("CREATE order product method should add an order with product-quantity and product-id", async () => {
     // @ts-ignore
-    const { quantity, order_id, product_id } =
+    const { quantity, orderId, productId } =
       await store.createOrderProduct({
         quantity: 4,
         orderId: 2,
         productId: 3,
       });
 
-    expect({ quantity, order_id, product_id }).toEqual({
+    expect({ quantity, orderId, productId }).toEqual({
       quantity: 4,
-      order_id: "2",
-      product_id: "3",
+      orderId: "2",
+      productId: "3",
     });
   });
 
