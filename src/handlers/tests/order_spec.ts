@@ -66,22 +66,22 @@ describe("Order Handler", () => {
     expect(response.status).toBe(200);
   });
 
-  it("success for READ orders by user id", async () => {
-    const response = await request
-      .get("/orders")
-      .send("userId=1");
+  //   it("success for READ orders by user id", async () => {
+  //     const response = await request
+  //       .get("/orders")
+  //       .send("userId=1");
 
-    expect(response.status).toBe(200);
-  });
+  //     expect(response.status).toBe(200);
+  //   });
 
-  it("success for CREATE order with product quantity and product id", async () => {
-    const response = await request
-      .post("/orders/products")
-      .auth(token, { type: "bearer" })
-      .send({ quantity: 2, orderId: 1, productId: 1 });
+  //   it("success for CREATE order with product quantity and product id", async () => {
+  //     const response = await request
+  //       .post("/orders/products")
+  //       .auth(token, { type: "bearer" })
+  //       .send({ quantity: 2, orderId: 1, productId: 1 });
 
-    expect(response.status).toBe(200);
-  });
+  //     expect(response.status).toBe(200);
+  //   });
 
   it("success for DELETE order product with order product id", async () => {
     const response = await request
