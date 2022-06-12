@@ -25,7 +25,7 @@ const index = async (_req: Request, res: Response) => {
 
 const show = async (req: Request, res: Response) => {
   try {
-    const user = await store.show(req.params.username);
+    const user = await store.show(req.params.id);
     res.json(user);
   } catch (error) {
     console.log(error);
