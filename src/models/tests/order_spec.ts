@@ -69,7 +69,7 @@ describe("Order Model", () => {
 
     expect({ status, userId }).toEqual({
       status: "shipped",
-      userId: "3",
+      userId: 3,
     });
   });
 
@@ -78,7 +78,7 @@ describe("Order Model", () => {
 
     expect({ status, userId }).toEqual({
       status: "shipped",
-      userId: "3",
+      userId: 3,
     });
   });
 
@@ -87,7 +87,7 @@ describe("Order Model", () => {
 
     expect({ status, userId }).toEqual({
       status: "shipped",
-      userId: "3",
+      userId: 3,
     });
   });
 
