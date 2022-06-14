@@ -43,18 +43,11 @@ describe("Product Model", () => {
   });
 
   it("SHOW method should return a product by product name", async () => {
-    const { name, price } = await store.show("banana");
+    const { name, price } = await store.show("thor");
 
     expect({ name, price }).toEqual({
       name: "thor",
       price: 22,
     });
-  });
-
-  it("DELETE method should remove a product by product name", async () => {
-    await store.delete("thor");
-    const result = await store.show("thor");
-
-    expect(result).toBe(undefined);
   });
 });
