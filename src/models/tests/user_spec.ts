@@ -102,4 +102,12 @@ describe("User Model", () => {
     const { username } = parseJwt(token);
     expect(username).toBe(foundUser.username);
   });
+
+  it("DELETE method should delete a user by username", async () => {
+    await store.delete(userInstance.username);
+    const result = await store.show(userInstance.username);
+
+    // @ts-ignore
+    expect(result).toBe(undefined);
+  });
 });

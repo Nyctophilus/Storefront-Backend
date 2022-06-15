@@ -50,4 +50,12 @@ describe("Product Model", () => {
       price: 22,
     });
   });
+
+  it("DELETE method should remove a product by product name", async () => {
+    await store.delete("banana");
+    const result = await store.show("banana");
+
+    // @ts-ignore
+    expect(result).toBe(undefined);
+  });
 });
