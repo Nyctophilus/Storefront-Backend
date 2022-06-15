@@ -15,9 +15,8 @@ export class ProductStore {
       conn.release();
 
       return result.rows;
-    } catch (e) {
-      throw new Error(`Failed to get products list. 
-	  Error: ${e}`);
+    } catch (err) {
+      throw new Error(`Unable to get all products. Error: ${err}`);
     }
   }
 
@@ -31,9 +30,8 @@ export class ProductStore {
       conn.release();
 
       return product;
-    } catch (e) {
-      throw new Error(`Failed to find product ${productName}. 
-	  Error: ${e}`);
+    } catch (err) {
+      throw new Error(`Unable to find product ${productName}. Error: ${err}`);
     }
   }
 
@@ -42,18 +40,14 @@ export class ProductStore {
       const sql =
         "INSERT INTO products (name, price) VALUES($1, $2) RETURNING *";
       const conn = await Client.connect();
-      const result = await conn.query(sql, [
-        p.name,
-        p.price,
-      ]);
+      const result = await conn.query(sql, [p.name, p.price]);
       const product = result.rows[0];
 
       conn.release();
 
       return product;
-    } catch (e) {
-      throw new Error(`Failed to add new product: ${p.name}. 
-	  Error: ${e}`);
+    } catch (err) {
+      throw new Error(`Unable to add new product ${p.name}. Error: ${err}`);
     }
   }
 
@@ -67,9 +61,8 @@ export class ProductStore {
       conn.release();
 
       return product;
-    } catch (e) {
-      throw new Error(`Failed to delete ${productName}. 
-	  Error: ${e}`);
+    } catch (err) {
+      throw new Error(`Unable to delete product ${productName}. Error: ${err}`);
     }
   }
 }

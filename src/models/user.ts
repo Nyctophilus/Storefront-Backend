@@ -18,9 +18,8 @@ export class UserStore {
       conn.release();
 
       return users;
-    } catch (e) {
-      throw new Error(`Failure of aquiring the full users list!
-	  Error: ${e}`);
+    } catch (err) {
+      throw new Error(`Unable to get all users. Error: ${err}`);
     }
   }
 
@@ -34,17 +33,12 @@ export class UserStore {
       conn.release();
 
       return user;
-    } catch (e) {
-      throw new Error(
-        `Failed to find user ${username}!
-		Error: ${e}`
-      );
+    } catch (err) {
+      throw new Error(`Unable to find user ${username}. Error: ${err}`);
     }
   }
 
-  async create(
-    u: User
-  ): Promise<{ id: string; username: string }> {
+  async create(u: User): Promise<{ id: string; username: string }> {
     try {
       const sql =
         "INSERT INTO users (firstname, lastname, username, password) VALUES($1, $2, $3, $4) RETURNING *";
@@ -62,18 +56,14 @@ export class UserStore {
       conn.release();
 
       return { id: user.id, username: user.username };
-    } catch (e) {
-      throw new Error(
-        `Failed to create user ${u.username}'s entry... ${e}`
-      );
+    } catch (err) {
+      throw new Error(`Unable to create user ${u.username}: ${err}`);
     }
   }
 
-  async login(username: string): Promise<{
-    id: string;
-    username: string;
-    password: string;
-  }> {
+  async login(
+    username: string
+  ): Promise<{ id: string; username: string; password: string }> {
     try {
       const sql = "SELECT * FROM users WHERE username=($1)";
       const conn = await Client.connect();
@@ -83,8 +73,8 @@ export class UserStore {
       conn.release();
 
       return user;
-    } catch (e) {
-      throw new Error(`${username} login failed... ${e}`);
+    } catch (err) {
+      throw new Error(`Unable to login user ${username}: ${err}`);
     }
   }
 
@@ -98,10 +88,8 @@ export class UserStore {
       conn.release();
 
       return user;
-    } catch (e) {
-      throw new Error(
-        `removing ${username} failed... ${e}`
-      );
+    } catch (err) {
+      throw new Error(`Unable to delete user ${username}. Error: ${err}`);
     }
   }
 }

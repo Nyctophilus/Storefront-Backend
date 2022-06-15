@@ -3,31 +3,31 @@ import { ProductStore } from "../product";
 const store = new ProductStore();
 
 describe("Product Model", () => {
-  it("should have INDEX method", () => {
+  it("should have an INDEX method", () => {
     expect(store.index).toBeDefined();
   });
 
-  it("should have SHOW method", () => {
+  it("should have a SHOW method", () => {
     expect(store.show).toBeDefined();
   });
 
-  it("should have CREATE method", () => {
+  it("should have a CREATE method", () => {
     expect(store.create).toBeDefined();
   });
 
-  it("should have DELETE method", () => {
+  it("should have a DELETE method", () => {
     expect(store.delete).toBeDefined();
   });
 
-  it("CREATE method should add product", async () => {
+  it("CREATE method should add a product", async () => {
     const { name, price } = await store.create({
-      name: "thor",
-      price: 22,
+      name: "banana",
+      price: 4,
     });
 
     expect({ name, price }).toEqual({
-      name: "thor",
-      price: 22,
+      name: "banana",
+      price: 4,
     });
   });
 
@@ -36,18 +36,18 @@ describe("Product Model", () => {
 
     expect([{ name, price }]).toEqual([
       {
-        name: "thor",
-        price: 22,
+        name: "banana",
+        price: 4,
       },
     ]);
   });
 
   it("SHOW method should return a product by product name", async () => {
-    const { name, price } = await store.show("thor");
+    const { name, price } = await store.show("banana");
 
     expect({ name, price }).toEqual({
-      name: "thor",
-      price: 22,
+      name: "banana",
+      price: 4,
     });
   });
 
