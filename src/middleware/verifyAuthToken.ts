@@ -5,26 +5,19 @@ import dotenv from "dotenv";
 dotenv.config();
 const { JWT_TOKEN_SECRET } = process.env;
 
-const verifyAuthToken = (
-  req: Request,
-  res: Response,
-  next: Function
-) => {
-  const authorizationHeader = req.headers.authorization;
+const verifyAuthToken = (req: Request, res: Response, next: Function) => {
+  const authorizationHeader = req.headers.authorization; // OR req.header("authorization")
   const token = authorizationHeader?.split(" ")[1];
   if (!token) {
-    return res
-      .status(404)
-      .send("Missing Token!! Access denied.");
+    return res.status(401).send("Access denied. Token missing.");
   }
 
   try {
     jwt.verify(token, JWT_TOKEN_SECRET as string);
     next();
   } catch (err) {
-    return res
-      .status(400)
-      .send("Invalid token! Authentication Failed.");
+    res.status(400).send("Invalid token");
+    return;
   }
 };
 

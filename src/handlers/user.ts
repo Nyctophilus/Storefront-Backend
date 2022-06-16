@@ -6,47 +6,30 @@ import { User, UserStore } from "../models/user";
 import verifyAuthToken from "../middleware/verifyAuthToken";
 
 dotenv.config();
-const {
-  BCRYPT_SALT_ROUNDS,
-  BCRYPT_PEPPER,
-  JWT_TOKEN_SECRET,
-} = process.env;
+const { BCRYPT_SALT_ROUNDS, BCRYPT_PEPPER, JWT_TOKEN_SECRET } = process.env;
 
 const store = new UserStore();
 
 const index = async (_req: Request, res: Response) => {
-  try {
-    const users = await store.index();
-    res.json(users);
-  } catch (error) {
-    console.log(error);
-  }
+  const users = await store.index();
+  res.json(users);
 };
 
 const show = async (req: Request, res: Response) => {
-  try {
-    const user = await store.show(req.params.id);
-    res.json(user);
-  } catch (error) {
-    console.log(error);
-  }
+  const user = await store.show(req.params.username);
+  res.json(user);
 };
 
 const register = async (req: Request, res: Response) => {
   const pepperedPassword = `${req.body.password}${BCRYPT_PEPPER}`;
-  const salt = await bcrypt.genSalt(
-    parseInt(BCRYPT_SALT_ROUNDS as string)
-  );
-  const hashPassword = bcrypt.hashSync(
-    pepperedPassword,
-    salt
-  );
+  const salt = await bcrypt.genSalt(parseInt(BCRYPT_SALT_ROUNDS as string));
+  const hashPassword = bcrypt.hashSync(pepperedPassword, salt);
 
   try {
     const user: User = {
-      username: req.body.username as string,
       firstname: req.body.firstname as string,
       lastname: req.body.lastname as string,
+      username: req.body.username as string,
       password: hashPassword as string,
     };
 
@@ -60,11 +43,9 @@ const register = async (req: Request, res: Response) => {
 
 const login = async (req: Request, res: Response) => {
   try {
-    const foundUser = await store.login(
-      req.body.username as string
-    );
+    const foundUser = await store.login(req.body.username as string);
     if (!foundUser) {
-      return res.send("Username not found!");
+      return res.status(400).send("Username is wrong");
     }
 
     const pepperedPassword = `${req.body.password}${BCRYPT_PEPPER}`;
@@ -73,7 +54,7 @@ const login = async (req: Request, res: Response) => {
       foundUser.password
     );
     if (!validPassword) {
-      return res.send("Invalid Password");
+      return res.status(400).send("Password is wrong");
     }
 
     const token = jwt.sign(
