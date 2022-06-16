@@ -26,19 +26,19 @@ const productInstance = {
 };
 
 describe("Order Model", () => {
-  beforeAll(async () => {
-    const pepperedPassword = `${userInstancePassword}${BCRYPT_PEPPER}`;
-    const salt = await bcrypt.genSalt(parseInt(BCRYPT_SALT_ROUNDS as string));
-    const hashPassword = bcrypt.hashSync(pepperedPassword, salt);
+  //   beforeAll(async () => {
+  //     const pepperedPassword = `${userInstancePassword}${BCRYPT_PEPPER}`;
+  //     const salt = await bcrypt.genSalt(parseInt(BCRYPT_SALT_ROUNDS as string));
+  //     const hashPassword = bcrypt.hashSync(pepperedPassword, salt);
 
-    const user: User = {
-      ...userInstance,
-      password: hashPassword as string,
-    };
-    await userStore.create(user);
+  //     const user: User = {
+  //       ...userInstance,
+  //       password: hashPassword as string,
+  //     };
+  //     await userStore.create(user);
 
-    await productStore.create(productInstance);
-  });
+  //     await productStore.create(productInstance);
+  //   });
 
   it("should have an INDEX method", () => {
     expect(store.index).toBeDefined();
@@ -89,20 +89,21 @@ describe("Order Model", () => {
     });
   });
 
-  it("CREATE order product method should add an order with product quantity and product id", async () => {
-    // @ts-ignore
-    const { quantity, order_id, product_id } = await store.createOrderProduct({
-      quantity: 4,
-      orderId: 2,
-      productId: 3,
-    });
+  //   it("CREATE order product method should add an order with product quantity and product id", async () => {
+  //     // @ts-ignore
+  //     const { quantity, order_id, product_id } =
+  //       await store.createOrderProduct({
+  //         quantity: 4,
+  //         orderId: 2,
+  //         productId: 3,
+  //       });
 
-    expect({ quantity, order_id, product_id }).toEqual({
-      quantity: 4,
-      order_id: "2",
-      product_id: "3",
-    });
-  });
+  //     expect({ quantity, order_id, product_id }).toEqual({
+  //       quantity: 4,
+  //       order_id: "2",
+  //       product_id: "3",
+  //     });
+  //   });
 
   it("DELETE order product method should remove an order product by order product id", async () => {
     const result = await store.deleteOrderProduct("3");
@@ -114,6 +115,6 @@ describe("Order Model", () => {
     await orderStore.deleteOrderProduct("2");
     await productStore.delete(productInstance.name);
     await orderStore.deleteOrder("2");
-    await userStore.delete(userInstance.username);
+    // await userStore.delete(userInstance.username);
   });
 });

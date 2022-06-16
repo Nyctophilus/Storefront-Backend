@@ -17,36 +17,40 @@ const userInstance = {
 
 describe("User Handler", () => {
   it("should return success for CREATE user", async () => {
-    const response = await request.post("/users/register").send(userInstance);
-
-    expect(response.status).toBe(200);
-    expect(response.body).toBeTruthy();
-  });
-
-  it("should return success for READ all users", async () => {
     const response = await request
-      .get("/users")
-      .auth(token, { type: "bearer" });
+      .post("/users/register")
+      .send(userInstance);
 
     expect(response.status).toBe(200);
     expect(response.body).toBeTruthy();
   });
 
-  it("should return success for READ user by username", async () => {
-    const response = await request
-      .get("/users")
-      .auth(token, { type: "bearer" })
-      .send(`username=${userInstance.username}`);
+  //   it("should return success for READ all users", async () => {
+  //     const response = await request
+  //       .get("/users")
+  //       .auth(token, { type: "bearer" });
 
-    expect(response.status).toBe(200);
-    expect(response.body).toBeTruthy();
-  });
+  //     expect(response.status).toBe(200);
+  //     expect(response.body).toBeTruthy();
+  //   });
+
+  //   it("should return success for READ user by username", async () => {
+  //     const response = await request
+  //       .get("/users")
+  //       .auth(token, { type: "bearer" })
+  //       .send(`username=${userInstance.username}`);
+
+  //     expect(response.status).toBe(200);
+  //     expect(response.body).toBeTruthy();
+  //   });
 
   it("should return success for LOGIN user", async () => {
-    const response = await request.post("/users/login").send({
-      username: userInstance.username,
-      password: userInstance.password,
-    });
+    const response = await request
+      .post("/users/login")
+      .send({
+        username: userInstance.username,
+        password: userInstance.password,
+      });
 
     expect(response.status).toBe(200);
     expect(response.body).toBeTruthy();

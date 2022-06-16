@@ -14,15 +14,15 @@ const productInstance = {
 };
 
 describe("Product Handler", () => {
-  it("should return success for CREATE product", async () => {
-    const response = await request
-      .post("/products")
-      .auth(token, { type: "bearer" })
-      .send(productInstance);
+  //   it("should return success for CREATE product", async () => {
+  //     const response = await request
+  //       .post("/products")
+  //       .auth(token, { type: "bearer" })
+  //       .send(productInstance);
 
-    expect(response.status).toBe(200);
-    expect(response.body).toBeTruthy();
-  });
+  //     expect(response.status).toBe(200);
+  //     expect(response.body).toBeTruthy();
+  //   });
 
   it("should return success for READ all products", async () => {
     const response = await request.get("/products");
@@ -40,13 +40,13 @@ describe("Product Handler", () => {
     expect(response.body).toBeTruthy();
   });
 
-  it("should return success for DELETE product by product id", async () => {
-    const response = await request
-      .delete("/products")
-      .auth(token, { type: "bearer" })
-      .send({ productName: productInstance.name });
+  //   it("should return success for DELETE product by product id", async () => {
+  //     const response = await request
+  //       .delete("/products")
+  //       .auth(token, { type: "bearer" })
+  //       .send({ productName: productInstance.name });
 
-    expect(response.status).toBe(200);
-    expect(response.body).toBeTruthy();
-  });
+  //     expect(response.status).toBe(200);
+  //     expect(response.body).toBeTruthy();
+  //   });
 });
